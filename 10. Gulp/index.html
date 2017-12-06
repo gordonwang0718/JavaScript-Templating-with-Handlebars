@@ -1,0 +1,137 @@
+<html>
+
+<head>
+	<meta charset="utf-8">
+
+	<!-- http://www.w3school.com.cn/tags/tag_meta.asp -->
+	<meta http-equiv="x-ua-compatible" content="ie=edge">
+
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<!-- The width property controls the size of the viewport. It can be set to a specific number of pixels,
+		like width=600 or to the special value device-width, which is the width of the screen in CSS pixels
+		at a scale of 100%. (There are corresponding height and device-height values, which may be useful
+		for pages with elements that change size or position based on the viewport height.)
+
+		The initial-scale property controls the zoom level when the page is first loaded. The maximum-scale, minimum-scale,
+		and user-scalable properties control how users are allowed to zoom the page in or out.
+
+		https://developer.mozilla.org/en-US/docs/Mozilla/Mobile/Viewport_meta_tag -->
+
+	<title>Yes or No?</title>
+	<link rel="stylesheet" href="bower_components/material-design-lite/material.min.css">
+	<link rel="stylesheet" href="css/stylesheet.css">
+	<link rel="stylesheet" href="http://fonts.googleapis.com/icon?family=Material+Icons">
+</head>
+
+<body>
+	<div id="main" class="mdl-layout mdl-js-layout mdl-layout--fiexed-header"></div>
+
+	<script type="text/x-handlebars-template" id="index-template">
+		<!-- Header -->
+		<div class="mdl-layout__header mdl-layer__header--waterfall">
+			<div class="mdl-layout__header-row">
+				<a class="site-title">
+					<span class="mdl-layout-title">
+						{{siteTittle}}
+					</span>
+				</a>
+
+				<!-- Add spacer, to align navigation to the right in desktop -->
+				<div class="mdl-layout-spacer"></div>
+
+				<!-- Navigation -->
+				<div>
+					<nav class="mdl-navigation">
+						<a class="mdl-navigation__link mdl-typography--text-uppercase" href="?filter=dogs{{getLanguageFilter langId}}">{{dogsFilter}}</a>
+						<a class="mdl-navigation__link mdl-typography--text-uppercase" href="?filter=not_dogs{{getLanguageFilter langId}}">{{notDogsFilter}}</a>
+						<a class="mdl-navigation__link mdl-typography--text-uppercase" href="?filter=maybe_dogs{{getLanguageFilter langId}}">{{incompleteFilter}}</a>
+					</nav>
+				</div>
+			</div>
+		</div>
+
+		<!-- Content -->
+		<div id="score"></div>
+
+		<div id="languageSwitch">
+			<button class="mdl-button">{{languageFilter}}</button>
+		</div>
+
+		<div class="mdl-layout__content">
+			<a name="top"></a>
+
+			<div class="mdl-typography--text-center">
+				<h1>{{siteTittle}}</h1>
+			</div>
+
+			<!-- Sub-Content -->
+			<div id="theDogs"></div>
+
+			<div id="pagination"></div>
+
+			<footer class="mdl-mega-footer">
+				<div class="mdl-mega-footer--top-section">
+					<p class="mdl-typography--font-light">© 2016 Gordon Wang</p>
+				</div>
+			</footer>
+		</div>
+		</script>
+
+	</script>
+
+	<script type="text/x-handlebars-template" id="dogs-template">
+		{{#each dogs}}
+			{{> dog language=@root.language}}
+		{{else}}
+			{{language.noDogsMessage}}
+		{{/each}}
+	</script>
+
+	<script type="text/x-handlebars-template" id="dog-template">
+		<div class="mdl-card mdl-shadow--2dp dog-card" data-dog-id="{{id}}">
+			<div class="mdl-card__title mdl-card--expand" style="background: url('images/{{image}}') center 15% no-repeat #46B6AC;">
+				<h2 class="mdl-card__title-text">{{name}}</h2>
+			</div>
+			<div class="mdl-card__actions mdl-card--border">
+				<button class="mdl-button mdl-button--raised dog-button {{isChosen 'dog'}}"> {{language.yep}} </button>
+				<button class="mdl-button mdl-button--raised not-dog-button {{isChosen 'not dog'}}"> {{language.nope}} </button>
+			</div>
+
+			{{#if chosen}}
+				{{#if isCorrect}}
+					<span class="result-good">{{language.correctInd}}</span>
+				{{else}}
+					<span class="result-bad">{{language.incorrectInd}}</span>
+				{{/if}}
+			{{/if}}
+		</div>
+	</script>
+
+	<script type="text/x-handlebars-template" id="page-template">
+		<ul>
+			{{#each (generatePages dogs)}}
+				<li><a href="{{link}}">{{number}}</a></li>
+			{{/each}}
+		</ul>
+	</script>
+
+	<script type="text/x-handlebars-template" id="score-template">
+		<button class="mdl-button">
+			{{#generateScore dogs language=language}}
+				{{correct}} {{language.correct}} |
+				{{incorrect}} {{language.incorrect}} |
+				{{incomplete}} {{language.incomplete}}
+			{{/generateScore}}
+			<small>Reset?</small>
+		</button>
+	</script>
+
+	<script src="bower_components/jquery/dist/jquery.min.js"></script>
+	<script src="bower_components/handlebars/handlebars.min.js"></script>
+	<script src="bower_components/material-design-lite/material.min.js"></script>
+	<script src="script/dogPack.js"></script>
+	<script src="script/helper.js"></script>
+	<script src="script/app.js"></script>
+</body>
+
+</html>
