@@ -1,0 +1,48 @@
+<!-- Header -->
+<div class="mdl-layout__header mdl-layer__header--waterfall">
+  <div class="mdl-layout__header-row">
+    <a class="site-title">
+      <span class="mdl-layout-title">
+        {{siteTittle}}
+      </span>
+    </a>
+
+    <!-- Add spacer, to align navigation to the right in desktop -->
+    <div class="mdl-layout-spacer"></div>
+
+    <!-- Navigation -->
+    <div>
+      <nav class="mdl-navigation">
+        <a class="mdl-navigation__link mdl-typography--text-uppercase" href="?filter=dogs{{getLanguageFilter langId}}">{{dogsFilter}}</a>
+        <a class="mdl-navigation__link mdl-typography--text-uppercase" href="?filter=not_dogs{{getLanguageFilter langId}}">{{notDogsFilter}}</a>
+        <a class="mdl-navigation__link mdl-typography--text-uppercase" href="?filter=maybe_dogs{{getLanguageFilter langId}}">{{incompleteFilter}}</a>
+      </nav>
+    </div>
+  </div>
+</div>
+
+<!-- Content -->
+<div id="score"></div>
+
+<div id="languageSwitch">
+  <button class="mdl-button">{{languageFilter}}</button>
+</div>
+
+<div class="mdl-layout__content">
+  <a name="top"></a>
+
+  <div class="mdl-typography--text-center">
+    <h1>{{siteTittle}}</h1>
+  </div>
+
+  <!-- Sub-Content -->
+  <div id="theDogs"></div>
+
+  <div id="pagination"></div>
+
+  <footer class="mdl-mega-footer">
+    <div class="mdl-mega-footer--top-section">
+      <p class="mdl-typography--font-light">© 2016 Gordon Wang</p>
+    </div>
+  </footer>
+</div>
